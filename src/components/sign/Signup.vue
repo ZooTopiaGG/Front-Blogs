@@ -17,10 +17,10 @@
             <el-input v-model="formLabelAlign.gender"></el-input>
           </el-form-item>
           <el-form-item label="密码">
-            <el-input v-model="formLabelAlign.password"></el-input>
+            <el-input type='password' v-model="formLabelAlign.password"></el-input>
           </el-form-item>
           <el-form-item label="确认密码">
-            <el-input v-model="formLabelAlign.password1"></el-input>
+            <el-input type='password' v-model="formLabelAlign.password1"></el-input>
           </el-form-item>
           <el-form-item>
             <p>我有账号了。<router-link :to="{ name: 'signin' }">直接去登录</router-link></p>

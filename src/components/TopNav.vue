@@ -114,8 +114,9 @@ export default {
 }
 .logo span{
   display: inline-block;
-  width: 400px;
-  height: 90px;
+  width: 266px;
+  height: 60px;
+  margin-top: 15px;
   background: url(../assets/images/a8e57c6141974e8f84d18ac79a75908f.png) no-repeat;
   background-size: cover;
 }
@@ -141,7 +142,7 @@ export default {
   box-shadow: 1px 1px 10px 1px #CCC;
   -webkit-box-shadow: 1px 1px 10px 1px #CCC;
   -moz-box-shadow: 1px 1px 10px 1px #CCC;
-  border-color: red;
+  border-bottom-color: red;
   color: #4c4c4c;
   margin-top: 10px; 
   padding: 10px 0;

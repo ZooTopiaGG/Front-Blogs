@@ -33,8 +33,20 @@ export default {
       formLabelAlign: {
         name: '',
         password: ''
-      }
+      },
+      fromSignUp: false,
+
     }
+  },
+  beforeRouteEnter (to, from, next) {
+     next(vm => {
+      // 通过 `vm` 访问组件实例
+      // console.log(from)
+      // console.log(vm.fromSignUp)
+      if (from.path === '/signup' || from.path === '/signin') {
+        vm.fromSignUp = true
+      }
+    })
   },
   methods: {
     submitForm () {
@@ -48,7 +60,11 @@ export default {
       .then(res => {
           let r = JSON.stringify(res.data.result)
           window.localStorage.setItem('55lover_reader', r)
-          this.$router.go(-1)
+          if (this.fromSignUp) {
+            this.$router.push({ path: '/' })
+          } else {
+            this.$router.go(-1)
+          }
           this.$message({
             message: res.data.message,
             type: 'success'
@@ -58,7 +74,7 @@ export default {
         console.log(err)
       })
     }
-  }
+  },
 }
 </script>
 

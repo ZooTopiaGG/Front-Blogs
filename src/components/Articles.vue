@@ -161,10 +161,10 @@ export default {
   margin-right: 40px;
 }
 .art-title a,.art-right a {
-  color: #87ceeb
+  color: #18aacf
 }
 .art-title a:hover,.art-right a:hover{
-  color:#409EFF
+  text-decoration: underline;
 }
 .author-info {
   font-size: 14px;

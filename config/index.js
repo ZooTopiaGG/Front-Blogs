@@ -24,15 +24,15 @@ module.exports = {
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report,
-    proxyTable: {
-      '/api': {
-        target: 'http://localhost:3000/',
-        changeOrigin: true,
-        // pathRewrite: {
-        //   '^/api': '/'
-        // }
-      }
-    },
+    // proxyTable: {
+    //   '/api': {
+    //     target: 'http://localhost:3000/',
+    //     changeOrigin: true,
+    //     // pathRewrite: {
+    //     //   '^/api': '/'
+    //     // }
+    //   }
+    // },
   },
   dev: {
     env: require('./dev.env'),
@@ -41,13 +41,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
-        target: 'http://localhost:3000/',
-        changeOrigin: true,
-        // pathRewrite: {
-        //   '^/api': '/'
-        // }
-      }
+      // '/api': {
+      //   target: 'http://localhost:3000/',
+      //   changeOrigin: true,
+      //   // pathRewrite: {
+      //   //   '^/api': '/'
+      //   // }
+      // }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README

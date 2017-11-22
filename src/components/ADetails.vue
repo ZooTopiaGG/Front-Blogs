@@ -16,8 +16,7 @@
         </div>
       </div>
     </div>
-    <article class="content" id='doc-content'>
-      <textarea style="display:none;"></textarea>
+    <article class="content" id='doc-content' v-html="content">
     </article>
   </div>
 </template>
@@ -47,22 +46,12 @@ export default {
         }
         this.viewcount = res.data.result.viewcount
         this.createtime = Coms.getCommonTime(res.data.result.createAt)
-        $('.editormd-html-preview').html(res.data.result.content)
-        // loadingInstance.close()
+        this.content = res.data.result.content
       })
       .catch(err => {})
     }
   },
   mounted () {
-    editormd.markdownToHTML("doc-content", {//注意：这里是上面DIV的id
-      htmlDecode: "style,script,iframe",
-      emoji: true,
-      taskList: true,
-      tex: true, // 默认不解析
-      flowChart: true, // 默认不解析
-      sequenceDiagram: true, // 默认不解析
-      codeFold: true,
-    });
     this.getArticle()
   }
 }
@@ -88,10 +77,10 @@ export default {
   margin-right: 20px;
 }
 .author a {
-  color: #87ceeb
+  color: #18aacf
 }
 .author a:hover{
-  color: #409EFF
+  text-decoration: underline;
 }
 .type {
   margin-left: 20px;
@@ -106,5 +95,9 @@ export default {
 .content {
   margin-top: 40px;
   padding: 0 40px;
+}
+#doc-content {
+  font-size: 16px;
+  line-height: 1.8;
 }
 </style>
