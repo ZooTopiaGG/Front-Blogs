@@ -9,11 +9,20 @@ import ADetails from '@/components/ADetails'
 import Dynamic from '@/components/Dynamic'
 import Signin from '@/components/sign/Signin'
 import Signup from '@/components/sign/Signup'
+import Info from '@/components/sign/Info'
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
+  scrollBehavior (to, from, savedPosition) {
+    // return 期望滚动到哪个的位置
+    if(savedPosition){
+      return savedPosition
+    }else{
+      return { x:0,y:0 }
+    }
+  },
   routes: [
     {
       path: '/',
@@ -33,6 +42,11 @@ export default new Router({
       path: '/signin',
       name: 'signin',
       component: Signin
+    },
+    {
+      path: '/info/:userid',
+      name: 'info',
+      component: Info
     },
     {
       path: '/articles',

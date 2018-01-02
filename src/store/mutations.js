@@ -22,5 +22,11 @@ export default {
   },
   'NO_LOGIN': (state, para) => {
     state.isLogin = para
+  },
+  'MUISC_PLAYED': (state) => {
+    state.isPlay = true
+  },
+  'MUISC_NO_PLAY': (state) => {
+    state.isPlay = false
   }
 }

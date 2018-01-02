@@ -87,9 +87,12 @@ export default {
     getDynamicList () {
       axios.get('/api/getDynamicList')
       .then(res => {
-        this.list = res.data.result
-        loadingInstance.close()
-        return 'ok'
+        if (res.data.result && res.data.result.length > 0) {
+          this.list = res.data.result
+          return 'ok'
+        } else {
+          this.$message.info('作者没有发布动态')
+        }
       })
       .then(res => {
         if (res) {
@@ -146,7 +149,6 @@ export default {
     }
   },
   mounted () {
-    
     this.getDynamicList()
   }
 }

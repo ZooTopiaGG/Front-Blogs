@@ -111,4 +111,24 @@ body{
   bottom: 80px;
   cursor: pointer;
 }
+pre{
+}
+#doc-content {
+  font-size: 16px;
+}
+#doc-content pre{
+  display: block;
+  margin: 0 0 10px;
+  border: 1px solid #ccc;
+  padding: 15px;
+  font-size: 13px;
+  word-wrap: normal;
+  word-break: break-word!important;
+  word-break: break-all;
+  white-space: pre;
+  overflow: auto;
+  border-radius: 0;
+  background: #f6f6f6;
+  color: #657b83;
+}
 </style>

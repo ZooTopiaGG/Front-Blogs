@@ -32,11 +32,11 @@
           <img src="../assets/images/left.jpg" alt="avatar">
           <div>
             <small>
-              动态
+              技术
             </small>
-            <h4>My Dynamic</h4>
+            <h4>My Skill</h4>
             <p class="pbtn">
-              <button>前往 <pre style="display:inline-block">-></pre></button>
+              <button @click="goSkill">前往 <pre style="display:inline-block">-></pre></button>
             </p>
           </div>
           <div class="bg"></div>
@@ -46,11 +46,11 @@
           <img style="width:100%" src="../assets/images/right1.jpg" alt="avatar">
           <div>
             <small>
-              音乐
+              文章
             </small>
-            <h4>My Music</h4>
+            <h4>My Article</h4>
             <p class="pbtn">
-              <button>前往 <pre style="display:inline-block">-></pre></button>
+              <button @click="goArticle">前往 <pre style="display:inline-block">-></pre></button>
             </p>
           </div>
           <div class="bg"></div>
@@ -60,11 +60,11 @@
             <img style="width:100%"  src="../assets/images/right2.jpg" alt="avatar">
             <div>
               <small>
-                相册
+                音乐
               </small>
-              <h4>My Pictures</h4>
+              <h4>My Music</h4>
               <p class="pbtn">
-                <button>前往 <pre style="display:inline-block">-></pre></button>
+                <button @click="goMusic">前往 <pre style="display:inline-block">-></pre></button>
               </p>
             </div>
             <div class="bg"></div>
@@ -73,11 +73,11 @@
             <img style="width:100%" src="../assets/images/right3.jpg" alt="avatar">
             <div>
               <small>
-                兴趣
+                动态
               </small>
-              <h4>My Favorite</h4>
+              <h4>My Dynamic</h4>
               <p class="pbtn">
-                <button>前往 <pre style="display:inline-block">-></pre></button>
+                <button @click="goDynamic">前往 <pre style="display:inline-block">-></pre></button>
               </p>
             </div>
             <div class="bg"></div>
@@ -117,7 +117,7 @@
           我是2016年毕业的本科生，我从2015年8月初就开始工作，第一家公司是在四川成都的四凯科技有限公司实习，工作了2个月。然后去了第二家公司九益恒泰科技有限公司，工作到至今，负责web前端开发，高效的完成了公司的给的任务并在空余的时间进行自学新的前端技术等。
         </div>
         <div class="second-box">
-          <img src="../assets/images/maps.png">
+          <img class='maps' src="../assets/images/maps.png">
         </div>
       </div>
     </div>
@@ -146,6 +146,20 @@ export default {
   data () {
     return {
       msg: ''
+    }
+  },
+  methods: {
+    goSkill () {
+      this.$router.push({ name: 'program' })
+    },
+    goDynamic () {
+      this.$router.push({ name: 'dynamic' })
+    },
+    goMusic () {
+      this.$router.push({ name: 'music' })
+    },
+    goArticle () {
+      this.$router.push({ name: 'articles' })
     }
   },
   mounted () {
@@ -384,5 +398,8 @@ small::after{
   font-size: 42px;
   margin: 20px 0 20px;
 }
-
+.maps {
+  width: 100%;
+  height: 100%;
+}
 </style>

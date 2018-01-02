@@ -5,6 +5,8 @@ import App from './App.vue'
 import vuex from 'vuex'
 import Elementui from 'element-ui'
 
+
+
 // 监听滚动
 import vuescroll from 'vue-scroll'
 
@@ -62,9 +64,9 @@ axios.defaults.timeout = 5000
 // 配置请求头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 // 测试网接口地址
-axios.defaults.baseURL = 'http://localhost:8088/'
+// axios.defaults.baseURL = 'http://localhost:8086/'
 // 正式网接口地址
-// axios.defaults.baseURL = 'http://47.93.97.52:8088/'
+axios.defaults.baseURL = 'http://api.55lover.com/'
 
 // 添加一个请求拦截器
 axios.interceptors.request.use(config => {
@@ -93,6 +95,7 @@ axios.interceptors.response.use(res => {
 })
 
 router.beforeEach((to, from, next) => {
+  store.commit('MUISC_NO_PLAY')
   // 获取localstorage
   let user = window.localStorage.getItem('55lover_reader')
   let _user = JSON.parse(user)
@@ -104,8 +107,7 @@ router.beforeEach((to, from, next) => {
     // console.log(`您未登录`)
     store.dispatch('NO_LOGIN', null)
   }
-  // console.log(to)
-  if (to.path == '/signin' || to.path == '/signup') {
+  if (to.path == '/signin' || to.path == '/signup' || to.name == 'info') {
     store.commit('HIDE_NAV')
     store.commit('HIDE_FOOTER')
   } else {

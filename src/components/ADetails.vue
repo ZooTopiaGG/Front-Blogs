@@ -96,8 +96,6 @@ export default {
   margin-top: 40px;
   padding: 0 40px;
 }
-#doc-content {
-  font-size: 16px;
-  line-height: 1.8;
-}
+
+
 </style>

@@ -28,7 +28,7 @@
     -webkit-touch-callout: none;
 }
 
-html,body,title,meta,div,p,ul,ol,h1,h2,h3,h4,h5,h6,header,footer,section,aside,article,a,span,em,i,
+html,body,title,meta,div,ul,ol,header,footer,section,aside,article,a,span,em,i,
 input,button,blockquote,address,audio,video,nav,canvas,select,small,source,dd,dl,dt,table,tbody,hgroup,
 embed,frame,img,link,label,option,td,th,tr,tt,style{
     margin: 0;

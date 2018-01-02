@@ -1,5 +1,5 @@
 <template>
-  <div class="nav" v-show='GET_NAV_SHOW' :class="{ isHome: GET_IS_HOME }">
+  <div class="navs" v-show='GET_NAV_SHOW' :class="{ isHome: GET_IS_HOME }">
     <div class="menus flex flex-pack-around">
       <div class="logo flex-1">
         <router-link :to="{ name: 'home' }">
@@ -27,12 +27,14 @@
       </div>
       <div class="sign" v-else>
         <div class="info flex flex-align-center" @click="show = !show">
-          <img src="../assets/images/signin.png" style="margin-right: 5px"><span>{{ GET_LOGIN_STATUS.name }}</span>
+          <img v-if="GET_LOGIN_STATUS.avatar" :src="GET_LOGIN_STATUS.avatar" style="margin-right: 10px;width: 48px;height: 48px;border-radius: 100%;">
+          <img v-else src="../assets/images/signin.png" style="margin-right: 5px">
+          <span>{{ GET_LOGIN_STATUS.name }}</span>
         </div>
         <el-collapse-transition>
           <div v-show="show" class="showit transition-box">
               <ul class="item">
-                <li class="setting flex flex-align-center"><i></i>个人资料</li>
+                <li class="setting flex flex-align-center" @click="toinfo"><i></i>个人资料</li>
                 <li class="signout flex flex-align-center" @click="signout"><i></i>登出</li>
               </ul>
           </div>
@@ -45,7 +47,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  name: 'nav',
+  name: 'navs',
   data() {
     return {
       activeIndex: '1',
@@ -74,6 +76,10 @@ export default {
       window.localStorage.clear();
       this.show = false;
       this.$store.dispatch('NO_LOGIN', null)
+    },
+    toinfo () {
+      this.show = false;
+      this.$router.push({ name: 'info', params: { userid: this.GET_LOGIN_STATUS.id } })
     }
   },
   mounted () {
@@ -83,7 +89,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.nav{
+.navs{
   height: 90px;
   position: fixed;
   top: 0;
@@ -93,7 +99,7 @@ export default {
   z-index: 9;
   padding-top: 25px;
 }
-.nav.isHome{
+.navs.isHome{
   background: #18aacf;
   /*box-shadow: 1px 1px 10px 1px #CCC;
   -webkit-box-shadow: 1px 1px 10px 1px #CCC;

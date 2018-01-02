@@ -1,11 +1,12 @@
 <template>
-  <footer class="footer" v-show="GET_FOOTER_SHOW">
+  <footer :class="[{footers: true}, {music: GET_PLAY_STATUS}]" v-show="GET_FOOTER_SHOW">
     <div class="second-box ">
       <div class="mail"><span style="line-height: 160px;">分享好的资料、项目等给我，不胜感激！</span><a href="mailto:1181050123@qq.com" class="mailto">邮来邮去</a></div>
     </div>
     <div class="second-box ">
       <div class="box flex flex-pack-around flex-align-center">
-        <span>2017 © DENGPENG'HOUSE</span>
+        <span>2017 © DENGPENG'HOUSE 版权所有</span>
+        <span><a href="http://www.miitbeian.gov.cn" target="_blank">蜀ICP备17041201号</a></span>
         <span>平台支持：<a href="http://www.lawyer-center.com" target="_blank"><img width="28px" style="margin-right: 5px;vertical-align: -9px;" src="https://weixin.lawyer-says.com/images/common/logo.png" alt="律师说">律师说</a></span>
         <span class="mysite"><a href="https://github.com/ZooTopiaGG" alt="github" target="_blank"><img src="../assets/images/github.png" alt="github"></a> 
         <a href="https://www.linkedin.com/in/%E9%B9%8F-%E9%82%93-a23169144/" target="_blank"><img src="../assets/images/in.png" alt="领英"></a>
@@ -25,7 +26,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  name: 'footer',
+  name: 'footers',
   data() {
     return {
       activeIndex: '1'
@@ -33,7 +34,8 @@ export default {
   },
   computed: {
     ...mapGetters ([
-      'GET_FOOTER_SHOW'
+      'GET_FOOTER_SHOW',
+      'GET_PLAY_STATUS'
     ])
   },
   // 路由监听
@@ -56,7 +58,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.footer{
+.footers{
   padding-top: 35px;
 }
 .mail {
@@ -65,7 +67,7 @@ export default {
   margin: 20px 0 40px;
   background: #18aacf;
   color: #fff;
-  font-size: 42px;
+  font-size: 32px;
 }
 .mail  a {
   border: 1px solid #fff;
@@ -99,5 +101,8 @@ export default {
 }
 .mysite a{
   margin-right: 10px;
+}
+.music{
+  padding-bottom: 80px;
 }
 </style>
