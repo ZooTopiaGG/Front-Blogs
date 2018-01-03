@@ -81,12 +81,16 @@
           </div>
         </div>
         <div class="volume-btns flex flex-align-center" style="width: 160px;">
-          <icon name="volume-up" scale="1.8" style="color:#ddd; margin-right:10px;"></icon>
-          <div style="position:relative; width:100%">
-            <div class="base-line1"></div>
+          <div @click="volumeormute" style="width:2.8em;">
+            <icon :name="volume" scale="1.8" style="color:#ddd; margin-right:10px;" ></icon>
+          </div>
+          <div style="position:relative; width:100%" @click="pointVol($event, $event.offsetX)">
+            <div class="base-line1 base-line-volume-all-process"></div>
             <div  class="flex flex-align-center">
-              <div class="base-line"></div>
-              <div class="base-ball"></div>
+              <div class="base-line base-line-volume-process"></div>
+              <div class="base-ball" draggable="true"
+                @dragstart="dragStart($event, index)" @drag="drag($event, index)" @dragend="dragend($event, index)" 
+              ></div>
             </div>
           </div>
         </div>
@@ -137,6 +141,14 @@ export default {
       durationTime: '00:00',
       currentTimes: '00:00',
       index: 0, // 歌曲索引,
+      volume: 'volume-up',
+      initVolume: 0.5,
+      // 起始位置
+      startPoint: 0,
+      // 结束位置
+      endPoint: 0,
+      volumeWidth: 0,
+      nowVolWidth: 0
     }
   },
   methods: {
@@ -224,6 +236,61 @@ export default {
       $audio.currentTime = $audio.duration * rate;
       // this.updateProcess();
     },
+    // 点击喇叭，静音或者有声
+    volumeormute () {
+      var $audio = $('.audio').eq(this.index).get(0)
+      if (this.volume == 'volume-off') {
+        this.volume = 'volume-up'
+        $audio.volume = this.initVolume
+      } else {
+        this.volume = 'volume-off'
+        $audio.volume = 0
+      }
+    },
+    // 控制音量
+    pointVol (e, x) {
+      $('.base-line-volume-process').width(x)
+      var pgsWidth = $('.base-line-volume-all-process').width()
+      // console.log(`总长度：${pgsWidth}`)
+      // 计算点击位置 与 播放总长度 的比例 算时间比例
+      var rate = x/pgsWidth
+      var $audio = $('.audio').eq(this.index).get(0);
+      this.initVolume = rate
+      $audio.volume = rate
+      // console.log(`播放音量：${rate}`)
+    },
+    // 拖拽控制音量
+    dragStart (e) {
+      // console.log(`开始拖拽。。。${e.offsetX}`)
+      // 保存起始位置 以及球的起始位置
+      this.startPoint = e.offsetX
+      // 保存起始base-line的宽度
+      this.volumeWidth = $('.base-line-volume-process').width()
+      // console.log(`base-line的宽度：${this.volumeWidth}`)
+      // console.log('准备开始拖拽...')
+    },
+    drag (e) {
+      // console.log(`正在拖拽。。。${e.offsetX}`)
+      // console.log('正在被拖拽...')
+    },
+    dragend (e) {
+      // console.log(`拖拽结束。。。${e.offsetX}`)
+      // console.log('拖拽结束...')
+      // 拖拽末位置-起始位置 拖拽距离 即 volume的长度 也要+
+      var $min = e.offsetX - this.startPoint
+      // console.log(`两个点之间的距离：${$min}`)
+      var nowVolWidth = this.volumeWidth + $min
+      if (nowVolWidth >= $('.base-line-volume-all-process').width()) {
+        this.nowVolWidth = $('.base-line-volume-all-process').width()
+      } else if (nowVolWidth <= 0) {
+        this.nowVolWidth = 0
+      } else {
+        this.nowVolWidth = nowVolWidth
+      }
+      // console.log(`nowVolWidth:${this.nowVolWidth}`)
+      // $('.base-line-volume-process').width(nowVolWidth)
+      this.pointVol(e, this.nowVolWidth)
+    },
     // 点击图标播放歌曲
     async playorpause (index, singerName, songName) {
       var self = this
@@ -248,6 +315,10 @@ export default {
       self.i = index
       // console.log(`播放歌曲索引是：${index}`)
       var $audio = $('.audio').eq(index).get(0)
+      //  设置音量
+      $audio.volume = this.initVolume
+      // 获取音量
+      // console.log($audio.volume)
       // 获取音乐总时长
       self.durationTime = Coms.transTime($audio.duration)
       //  设置进度条
@@ -421,5 +492,8 @@ export default {
   border-radius:100%;
   background:#fff;
   box-shadow: 0 0 2px 2px #fff
+}
+.base-line-volume-process {
+  width: 50%
 }
 </style>
