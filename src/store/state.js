@@ -3,5 +3,7 @@ export default {
   isHome: false,
   footerShow: true,
   isLogin: {},
-  isPlay: false
+  isPlay: false,
+  getStat: {},
+  toAllAlbum: false
 }

@@ -1,52 +1,67 @@
 <template>
-  <div class="info">
-    <div class="logo">
-      <img alt="dengpeng" src="../../assets/images/73068c09df2142dfbcd926b6c4056dc6.png">
+  <section class="flex">
+    <div class="info flex-1 left-content">
+      <div class="title flex flex-align-center">
+        <icon name="user-secret" scale="1.2" style="color:#00AACD"></icon>
+        <span class="title-text">关于我</span>
+        <span class="title-label">About me</span>
+      </div>
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm bgbox box">
+        <el-form-item label="站长头像" prop="imageUrl" v-loading.body="loadingAvatarUpload" required>
+          <el-upload
+            class="avatars-uploader"
+            action="http://api.55lover.com/api/upload"
+            :show-file-list="false"
+            :disabled="true"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="ruleForm.imageUrl" :src="ruleForm.imageUrl" class="avatars">
+            <i v-else class="el-icon-plus avatars-uploader-icon"></i>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="公司名称" prop="company">
+          <el-input v-model="ruleForm.company" :disabled="true"></el-input>
+        </el-form-item>
+        </el-form-item>
+        <el-form-item label="出生日期" required>
+          <el-col :span="14">
+            <el-form-item prop="borndate">
+              <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.borndate" :disabled="true" style="width: 100%;"></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="性别" prop="gender" required>
+          <el-radio-group v-model="ruleForm.gender" :disabled="true">
+            <el-radio label="男"></el-radio>
+            <el-radio label="女"></el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="个人介绍" prop="desc">
+          <el-input type="textarea" v-model="ruleForm.desc" :disabled="true" :autosize="{ minRows: 3, maxRows: 6}"></el-input>
+        </el-form-item>
+        <el-form-item label="个人网站" prop="site">
+          <el-input v-model="ruleForm.site" :disabled="true"></el-input>
+        </el-form-item>
+        <!-- <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm')">立即修改</el-button>
+          <el-button @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item> -->
+      </el-form>
     </div>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="头像上传" prop="imageUrl" v-loading.body="loadingAvatarUpload" required>
-        <el-upload
-          class="avatars-uploader"
-          action="http://api.55lover.com/api/upload"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
-          <img v-if="ruleForm.imageUrl" :src="ruleForm.imageUrl" class="avatars">
-          <i v-else class="el-icon-plus avatars-uploader-icon"></i>
-        </el-upload>
-      </el-form-item>
-      <el-form-item label="公司名称" prop="company">
-        <el-input v-model="ruleForm.company"></el-input>
-      </el-form-item>
-      </el-form-item>
-      <el-form-item label="出生日期" required>
-        <el-col :span="14">
-          <el-form-item prop="borndate">
-            <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.borndate" style="width: 100%;"></el-date-picker>
-          </el-form-item>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="性别" prop="gender" required>
-        <el-radio-group v-model="ruleForm.gender">
-          <el-radio label="男"></el-radio>
-          <el-radio label="女"></el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="个人介绍" prop="desc">
-        <el-input type="textarea" v-model="ruleForm.desc"></el-input>
-      </el-form-item>
-      <el-form-item label="个人网站" prop="site">
-        <el-input v-model="ruleForm.site"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">立即修改</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
-  </div>
+    <div class="right-content">
+      <asides></asides>
+    </div>
+  </section>
 </template>
 <script>
+  import Asides from '@/components/Aside'
+  import 'vue-awesome/icons'
+  import Icon from 'vue-awesome/components/Icon'
   export default {
+    components: {
+      Asides,
+      Icon
+    },
     data() {
       return {
         loadingAvatarUpload: false,
@@ -123,7 +138,7 @@
           var gender = 0
         }
         var para = {
-          id: this.$route.params.userid,
+          id: 'd17692be-eca7-41ef-87df-aef4313e2b02',
           avatar: this.ruleForm.avatar,
           desc: this.ruleForm.desc,
           gender: gender,
@@ -146,9 +161,10 @@
       }
     },
     mounted () {
-      axios.get('/api/getInfo/'+this.$route.params.userid)
+      $('title').html('站长信息_关于我_邓鹏博客')
+      axios.get('/api/getInfo/d17692be-eca7-41ef-87df-aef4313e2b02')
       .then(res => {
-        console.log(res)
+        // console.log(res)
         if (res.data.isSuc && res.data.result) {
           let r = res.data.result
           this.ruleForm.imageUrl = r.avatar
@@ -170,6 +186,12 @@
 </script>
 
 <style>
+  .demo-ruleForm .el-form-item__label, 
+  .demo-ruleForm .el-input.is-disabled .el-input__inner, 
+  .demo-ruleForm .el-textarea.is-disabled .el-textarea__inner,
+  .demo-ruleForm .el-radio__input.is-disabled+span.el-radio__label{
+    color: #444
+  }
   .avatars-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -197,8 +219,8 @@
 
 <style scoped>
   .info {
-    width: 400px;
-    margin: 40px auto;
+    /*width: 400px;*/
+    margin: 0 auto 40px;
   }
   .logo  {
     margin-bottom: 40px;

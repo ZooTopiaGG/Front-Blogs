@@ -13,5 +13,11 @@ export default {
   },
   'GET_PLAY_STATUS': (state) => {
     return state.isPlay
+  },
+  'GET_STAT': (state) => {
+    return state.getStat
+  },
+  'GET_TO_ALBUM': (state) => {
+    return state.toAllAlbum
   }
 }

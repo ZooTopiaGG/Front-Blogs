@@ -1,15 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import Articles from '@/components/Articles'
-import Music from '@/components/Music'
-import Program from '@/components/Program'
-import PDetails from '@/components/PDetails'
-import ADetails from '@/components/ADetails'
-import Dynamic from '@/components/Dynamic'
-import Signin from '@/components/sign/Signin'
-import Signup from '@/components/sign/Signup'
-import Info from '@/components/sign/Info'
+// 路由懒加载
+const Program = () => import('@/components/Program')
+const Articles = () => import('@/components/Articles')
+const ADetails = () => import('@/components/ADetails')
+const Dynamic = () => import('@/components/Dynamic')
+const Album = () => import('@/components/Album')
+const Albums = () => import('@/components/Albums')
+const Music = () => import('@/components/Music')
+const MessageBoard = () => import('@/components/MessageBoard')
+const Info = () => import('@/components/sign/Info')
+const Signup = () => import('@/components/sign/Signup')
+const Signin = () => import('@/components/sign/Signin')
 
 Vue.use(Router)
 
@@ -44,7 +47,7 @@ export default new Router({
       component: Signin
     },
     {
-      path: '/info/:userid',
+      path: '/info',
       name: 'info',
       component: Info
     },
@@ -83,12 +86,25 @@ export default new Router({
       }
     },
     {
-      path: '/program/:programid',
-      name: 'pdetails',
-      component: PDetails,
+      path: '/album/:type',
+      name: 'album',
+      component: Album,
       meta:{
         keepAlive: true
       }
-    }
+    },
+    {
+      path: '/album/all',
+      name: 'albums',
+      component: Albums,
+      meta:{
+        keepAlive: true
+      }
+    },
+    {
+      path: '/messageboard',
+      name: 'messageboard',
+      component: MessageBoard
+    },
   ]
 })

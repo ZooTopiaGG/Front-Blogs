@@ -1,5 +1,5 @@
 <template>
-  <div class="adetails">
+  <div class="adetails bgbox box">
     <div class="details-title">{{ title }}</div>
     <div class="desc flex flex-align-center">
       <img class="avatar" src="../assets/images/23115938.jpg" alt='avatar'>
@@ -39,6 +39,7 @@ export default {
       axios.get('/api/getArticle/'+ this.$route.params.articleid)
       .then(res => {
         this.title = res.data.result.title
+        $('title').html(`${this.title}_邓鹏博客`)
         if (res.data.result.type == 0) {
           this.type = '原创'
         } else {
@@ -53,6 +54,7 @@ export default {
   },
   mounted () {
     this.getArticle()
+    sr.reveal(document.querySelectorAll('.box'))
   }
 }
 </script>
@@ -62,8 +64,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .adetails{
-  padding-top: 90px; 
-  max-width: 720px;
+  max-width: 920px;
   margin: 0 auto;
 }
 .desc{

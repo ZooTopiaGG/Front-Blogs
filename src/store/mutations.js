@@ -28,5 +28,14 @@ export default {
   },
   'MUISC_NO_PLAY': (state) => {
     state.isPlay = false
+  },
+  'SEND_STAT': (state, para) => {
+    state.getStat = para
+  },
+  'ALL_ALBUM': (state) => {
+    state.toAllAlbum = true
+  },
+  'A_ALBUM': (state) => {
+    state.toAllAlbum = false
   }
 }

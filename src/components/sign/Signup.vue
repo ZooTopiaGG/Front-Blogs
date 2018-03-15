@@ -1,10 +1,10 @@
 <template>
   <div class="signin">
-    <div class="box">
+    <div class="box bgbox s-form">
       <div class="logo">
-        <img alt="dengpeng" src="../../assets/images/73068c09df2142dfbcd926b6c4056dc6.png">
+        <img src="../../assets/images/logo2.png">
       </div>
-        <el-form class="in-form" :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
+        <el-form class="in-form signup-form" :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
           <el-form-item>
           </el-form-item>
           <el-form-item label="姓名/账号">
@@ -75,39 +75,43 @@ export default {
               type: 'error'
             })
           }
-          
-          // location.href = './loginSuc.html'
-          // this.$router.push({name: 'home'})
       })
       .catch(err => {
         console.log(err)
       })
     }
+  },
+  mounted () {
+    $('title').html('注册_邓鹏博客')
+    $('.signin').height($(window).height()-120)
   }
 }
 </script>
-
+<style type="text/css">
+  .signup-form .el-form-item {
+    margin-bottom: 0;
+  }
+  .signup-form .el-form-item__label {
+    color: #444
+  }
+</style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .signin{
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  top: 0;
-  background: #efefef
+  box-sizing: border-box;
 }
 .box {
   width: 400px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -250px;
-  margin-top: -420px;
+}
+.s-form{
+  margin: 0 auto;
 }
 .logo{
   text-align: center;
-  margin-bottom: 36px;
+}
+.logo img{
+  height: 70px;
+  overflow: hidden;
 }
 .box h3 {
   font-size: 42px;

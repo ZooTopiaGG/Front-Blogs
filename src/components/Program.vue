@@ -1,49 +1,62 @@
 <template>
-  <div class="program">
-    <div class="title">技术专栏</div>
-    <article class="article-list" v-for="(item, index) in list" :key="index">
-      <div class="article-info flex flex-align-center flex-pack-justify">
-        <div class="art-right">
-          <div class="art-title">
-            <router-link :to="{ name: 'adetails', params: { articleid: item.id, type: 'p'  } }">{{ item.title }}</router-link>
+  <section class="flex">
+    <div class="program flex-1 left-content">
+      <div class="title flex flex-align-center">
+        <icon name="codepen" scale="1.1" style="color:#00AACD"></icon>
+        <span class="title-text">技术专栏</span>
+        <span class="title-label">Technical column</span>
+      </div>
+      <article class="article-list bgbox" v-for="(item, index) in list" :key="index">
+        <div class="article-info flex flex-align-center flex-pack-justify">
+          <div class="art-right flex flex-v flex-pack-justify flex-1">
+            <div class="art-title">
+              <router-link :to="{ name: 'adetails', params: { articleid: item.id, type: 'p'  } }">{{ item.title }}</router-link>
+            </div>
+            <div class="desc">
+              {{ item.desc }}
+            </div>
+            <div class="author-info flex flex-align-center flex-pack-justify">
+              <span class="column-name"><router-link :to="{ name : 'articles' }">技术集</router-link></span>
+              <div class="flex flex-align-center">
+                <span class="create-time flex flex-align-center"><icon name="calendar" class="icon-label" scale="1.0" light style="color:#00AACD"></icon>{{ item.createAt }}</span>
+                <span class="flex flex-align-center"><icon name="eye" light scale="1.0" class="icon-label"  style="color:#00AACD"></icon><span class="review-count">{{ item.viewcount }}</span></span>
+              </div>
+            </div>
           </div>
-          <div class="author-info">
-            <span class="author"><router-link :to="{ name : 'home' }">邓鹏</router-link></span> / 
-            <span class="column-name"><router-link :to="{ name : 'articles' }">文章</router-link></span> / 
-            <span class="article-type">{{ item.type }}</span> / 
-            <span class="create-time">{{ item.createAt }}</span> /
-            <span >阅读量：<span class="review-count">{{ item.viewcount }}</span></span>
-          </div>
-          <div class="desc">
-            {{ item.desc }}
-          </div>
+          <router-link class="imgbox" :to="{ name: 'adetails', params: { articleid: item.id, type: 'p'  } }">
+            <img v-if="!item.smallimg" src="../assets/images/photo-peggy.jpg" alt="article">
+            <img v-else :src="item.smallimg" :onerror="logo" alt="article">
+          </router-link>
         </div>
-        <router-link :to="{ name: 'adetails', params: { articleid: item.id, type: 'p'  } }">
-          <img v-if="!item.smallimg" src="../assets/images/photo-peggy.jpg" alt="article">
-          <img v-else :src="item.smallimg" alt="article">
-        </router-link>
+        <!-- <div class="look">
+          <el-button type="primary" @click="lookMore(item.id)">前往阅读</el-button>
+        </div> -->
+      </article>
+      <div class="block">
+        <!-- <span class="demonstration">完整功能</span> -->
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage4"
+          :page-sizes="[10, 20, 30, 40]"
+          :page-size="10"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="totalcount"
+          class="page">
+        </el-pagination>
       </div>
-      <div class="look">
-        <el-button type="primary" @click="lookMore(item.id)">前往阅读</el-button>
-      </div>
-    </article>
-    <div class="block">
-      <!-- <span class="demonstration">完整功能</span> -->
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="10"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="totalcount"
-        class="page">
-      </el-pagination>
     </div>
-  </div>
+    <!-- 右边内容区域 -->
+    <div class="right-content">
+      <asides></asides>
+    </div>
+  </section>
 </template>
 
 <script>
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
+import Asides from '@/components/Aside'
 export default {
   name: 'program',
   data () {
@@ -52,8 +65,13 @@ export default {
       currentPage4: 1,
       totalcount: 0,
       pagesize: 10,
-      page: 1
+      page: 1,
+      logo: 'this.src="http://file.55lover.com/uploads/aff0d0293f71.jpg"' 
     }
+  },
+  components: {
+    Asides,
+    Icon
   },
   methods: {
     lookMore (id) {
@@ -109,6 +127,7 @@ export default {
     }
   },
   mounted () {
+    $('title').html('优雅的学习态度_技术专栏_邓鹏博客')
     this.getArticle()
   }
 }
@@ -118,60 +137,7 @@ export default {
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.program .title{
-  padding-bottom: 20px;
-}
 .program{
-  padding-top: 90px; 
-  max-width: 1200px;
-  margin: 0 auto;
   padding-bottom: 60px;
-}
-.page {
-  text-align: right;
-  margin-top: 60px
-}
-
-.article-list{
-  padding:20px 40px;
-}
-.article-list:hover{
-  -webkit-box-shadow: 1px 1px 10px 2px #CCC;
-  -moz-box-shadow: 1px 1px 10px 2px #CCC;
-  -webkit-transition: all .4s;
-  border-color: red;
-}
-.article-list:last-child{
-  margin-bottom: 40px;
-}
-.article-info img{
-  width: 200px;
-  height: 120px;
-  margin-right: 25px;
-  border: 1px solid #ddd;
-}
-.art-title{
-  font-size: 18px;
-}
-.art-right{
-  margin-right: 40px;
-}
-.art-title a,.art-right a {
-  color: #18aacf
-}
-.art-title a:hover,.art-right a:hover{
-  text-decoration: underline;
-}
-.author-info {
-  font-size: 14px;
-  margin:20px 0 10px 0; 
-}
-.desc{
-  font-size: 14px;
-  color: #333;
-  line-height: 1.5
-}
-.look{
-  margin-top: 10px;
 }
 </style>

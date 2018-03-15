@@ -3,40 +3,50 @@
 import Vue from 'vue'
 import App from './App.vue'
 import vuex from 'vuex'
-import Elementui from 'element-ui'
-
-
-
 // 监听滚动
 import vuescroll from 'vue-scroll'
-
-// console.log(vuescroll)
-
 Vue.use(vuescroll)
 Vue.use(vuex)
-
+//按需加载 Element-ui
 // collapse 展开折叠
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
-// import { Form, FormItem, Input, Button } from 'element-ui'
+import { 
+  Button, 
+  Select,
+  Form,
+  FormItem,
+  Input,
+  Upload,
+  Radio,
+  RadioGroup,
+  Col,
+  Pagination,
+  DatePicker,
+  Loading,
+  Message
+} 
+from 'element-ui'
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(Input)
+Vue.use(Button)
+Vue.use(Select)
+Vue.use(Upload)
+Vue.use(Radio)
+Vue.use(RadioGroup)
+Vue.use(Col)
+Vue.use(Pagination)
+Vue.component(CollapseTransition.name, CollapseTransition)
+Vue.use(DatePicker)
+Vue.use(Loading.directive);
 
-// Element 样式表
-// import 'element-ui/lib/theme-default/base.css' -.路径更改
-
-import 'element-ui/lib/theme-chalk/index.css'
-import 'element-ui/lib/theme-chalk/base.css'
-//按需加载 Element-ui
-// Vue.component(CollapseTransition.name, CollapseTransition)
-// Vue.use(Form)
-// Vue.use(FormItem)
-// Vue.use(Input)
-// Vue.use(Button)
-Vue.use(Elementui)
+Vue.prototype.$message = Message;
+Vue.prototype.$loading = Loading.service;
 
 import router from './router'
 import store from './store'
 import './assets/css/reset.css'
 import './assets/css/common.css'
-// import './assets/js/device.js'
 import Coms from './assets/js/fn.js'
 
 Vue.config.productionTip = false
@@ -55,16 +65,13 @@ window.Qs = require('../node_modules/qs')
 // AXIOS
 window.axios = require('../node_modules/axios')
 
-import { Loading } from 'element-ui'
-import { Message } from 'element-ui'
-
 // import axios from 'axios'
 // 响应时间
 axios.defaults.timeout = 5000
 // 配置请求头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 // 测试网接口地址
-// axios.defaults.baseURL = 'http://localhost:8086/'
+// axios.defaults.baseURL = 'http://localhost:8088/'
 // 正式网接口地址
 axios.defaults.baseURL = 'http://api.55lover.com/'
 
@@ -107,7 +114,7 @@ router.beforeEach((to, from, next) => {
     // console.log(`您未登录`)
     store.dispatch('NO_LOGIN', null)
   }
-  if (to.path == '/signin' || to.path == '/signup' || to.name == 'info') {
+  if (to.path == '/signin' || to.path == '/signup') {
     store.commit('HIDE_NAV')
     store.commit('HIDE_FOOTER')
   } else {

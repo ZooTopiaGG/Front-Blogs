@@ -1,52 +1,64 @@
 <template>
-  <div class="dynamic">
-    <div class="title">动态专栏</div>
-    <div class="dy-box flex" v-for="(item, index) in lists" :key='index'>
-      <div class="avatar">
-        <img src="../assets/images/23115938.jpg" alt="avatar">
+  <section class="flex">
+    <div class="dynamic flex-1 left-content">
+      <div class="title flex flex-align-center">
+        <icon name="bookmark" scale="1.2" style="color:#00AACD"></icon>
+        <span class="title-text">动态专栏</span>
+        <span class="title-label">Dynamic column</span>
       </div>
-      <div class="dy-con flex-1">
-        <div class="con">
-          <div class="con-first">
-            <div class="content">
-              <router-link :to="{ name: 'home' }" style="color:#409EFF">邓鹏。</router-link> &nbsp;&nbsp;{{ item.content }}
+      <div class="dy-box bgbox flex" v-for="(item, index) in lists" :key='index'>
+        <div class="avatar">
+          <img src="../assets/images/23115938.jpg" alt="avatar">
+        </div>
+        <div class="dy-con flex-1">
+          <div class="con">
+            <div class="con-first">
+              <div class="content">
+                <router-link :to="{ name: 'home' }" style="color:#409EFF">邓鹏。</router-link> &nbsp;&nbsp;{{ item.content }}
+              </div>
+              <div class="time"><span>发布时间：</span><span>{{ item.createAt | time }}</span></div>
             </div>
-            <div class="time"><span>发布时间：</span><span>{{ item.createAt | time }}</span></div>
-          </div>
-          <div v-if="item.commentsList.length > 0" :class="{'foldheight': foldheight,'comments-area': commentsArea}">
-            <div v-for="(item1, index1) in item.commentsList" :key="index1" style="margin-bottom: 5px;">
-              <div class="comment-item">
+            <div v-if="item.commentsList.length > 0" :class="{'foldheight': foldheight,'comments-area': commentsArea}">
+              <div v-for="(item1, index1) in item.commentsList" :key="index1" style="margin-bottom: 5px;">
+                <div class="comment-item">
 
-                <span v-if="item1.isreply === 1">
-                  <span style="color:#409EFF">{{ item1.username }}</span>回复<span style="color:#409EFF">{{ item1.tousername }}</span>
-                </span>
-                <span v-else>
-                  <span style="color:#409EFF">{{ item1.username }}</span>
-                </span>: 
-                <span>{{ item1.comment }}</span>
-                <span class="replys" style="color:#409EFF;cursor: pointer;margin-left: 10px;" @click="reply(index, item1.userid, item1.touserid, item1.username, item1.tousername)">回复</span>
-                <span style="margin-left: 10px;font-size:12px;">{{ item1.createAt | time }}</span>
+                  <span v-if="item1.isreply === 1">
+                    <span style="color:#409EFF">{{ item1.username }}</span>回复<span style="color:#409EFF">{{ item1.tousername }}</span>
+                  </span>
+                  <span v-else>
+                    <span style="color:#409EFF">{{ item1.username }}</span>
+                  </span>: 
+                  <span>{{ item1.comment }}</span>
+                  <span class="replys" style="color:#409EFF;cursor: pointer;margin-left: 10px;" @click="reply(index, item1.userid, item1.touserid, item1.username, item1.tousername)">回复</span>
+                  <span style="margin-left: 10px;font-size:12px;">{{ item1.createAt | time }}</span>
+                </div>
               </div>
             </div>
+            <div class="fold" v-if="item.commentsList.length > 2"  @click="foldheight = !foldheight">
+              <span v-if="!foldheight">展开</span>
+              <span v-else>收起</span>
+            </div>
           </div>
-          <div class="fold" v-if="item.commentsList.length > 2"  @click="foldheight = !foldheight">
-            <span v-if="!foldheight">展开</span>
-            <span v-else>收起</span>
-          </div>
-        </div>
-        <div class="comment">
-          <el-input type="textarea" v-model="item.value" :placeholder="item.placeholder"></el-input>
-          <div class="btn-primary">
-            <el-button type="primary" @click="addComments(item.id, item.value)">发布评论</el-button>
+          <div class="comment">
+            <el-input type="textarea" v-model="item.value" :placeholder="item.placeholder"></el-input>
+            <div class="btn-primary">
+              <el-button type="primary" @click="addComments(item.id, item.value)">发布评论</el-button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  <!-- 右边内容区域 -->
+    <div class="right-content">
+      <asides></asides>
+    </div>
+  </section>
 </template>
 
 <script>
-
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
+import Asides from '@/components/Aside'
 import Vue from 'vue'
 Vue.filter('time', function (val) {
   return Coms.getCommonTime1(val)
@@ -69,6 +81,10 @@ export default {
       touserid: 'd17692be-eca7-41ef-87df-aef4313e2b02', // m如果没有设置，则默认管理员
       tousername: '邓鹏' // 如果没有设置，则默认管理员
     }
+  },
+  components: {
+    Asides,
+    Icon
   },
   computed: {
     lists () {
@@ -149,6 +165,7 @@ export default {
     }
   },
   mounted () {
+    $('title').html('他又在说什么_动态专栏_邓鹏博客')
     this.getDynamicList()
   }
 }
@@ -160,13 +177,8 @@ export default {
 a:hover{
   text-decoration: underline;
 }
-.dynamic {
-  padding-top: 90px; 
-  max-width: 1200px;
-  margin: 0 auto;
-}
 .dy-box{
-  padding: 0 40px 40px;
+  padding: 40px;
 }
 .avatar img{
   width: 60px;
@@ -185,7 +197,7 @@ a:hover{
 }
 .dy-con .con{
   font-size: 13px;
-  color: #888
+  color: #555
 }
 .con-first {
   padding: 20px;
