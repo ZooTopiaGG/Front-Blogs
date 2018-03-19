@@ -14,7 +14,10 @@
             <el-input type='password' v-model="formLabelAlign.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <p>没有账号？<router-link :to="{ name: 'signup' }">去注册</router-link></p>
+            <div class="flex flex-pack-justify">
+              <p>没有账号？<router-link :to="{ name: 'signup' }">去注册</router-link></p>
+              <p><router-link :to="{ name: 'home' }">返回首页</router-link></p>
+            </div>
           </el-form-item>
           <el-form-item>
           <el-button type="primary" @click="submitForm()">立即登录</el-button>
@@ -77,7 +80,14 @@ export default {
   },
   mounted () {
     $('title').html('登录_邓鹏博客')
-    $('.signin').height($(window).height()-120)
+    let 
+      wHeight = $(window).height()-120,
+      bHeight = $('.box').height() + 60;
+    if (wHeight < bHeight) {
+      $('.signin').height(bHeight)
+    } else {
+       $('.signin').height(wHeight)
+    }
   }
 }
 </script>

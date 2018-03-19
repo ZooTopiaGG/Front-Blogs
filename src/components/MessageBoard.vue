@@ -52,7 +52,7 @@
               <div>
               </div>
                 <div class="transition-box">
-                  <el-input type="textarea" class="reply-textarea" v-model="item.value" @focus="replyBtn(index)" :placeholder="placeholder" :rows='rows'></el-input>
+                  <el-input type="textarea" class="reply-textarea" v-model="item.value" @focus="replyBtn(index)" :placeholder="item.placeholder" :rows='item.rows'></el-input>
                   <!-- <el-input type="textarea" class="reply-textarea" :rows='3'></el-input> -->
                   <el-collapse-transition>
                     <div v-show="item.show">
@@ -136,9 +136,6 @@ export default {
           { min: 1, max: 250, message: '长度在 1 到 250 个字符', trigger: 'blur' }
         ],
       },
-      rows: 1,
-      placeholder: '我也说一句',
-
     }
   },
   computed: {
@@ -151,6 +148,8 @@ export default {
         // val.value = this.value // 返回的不是observe对象
         this.$set(val, 'value', '') // 返回的是observe对象 ,深入响应式
         this.$set(val, 'show', false) // 返回的是observe对象 ,深入响应式
+        this.$set(val, 'rows', 1) // 返回的是observe对象 ,深入响应式
+        this.$set(val, 'placeholder', '我也说一句') // 返回的是observe对象 ,深入响应式
         // val.createAt = Coms.getCommonTime1(val.createAt)
         arr.push(val)
       })
@@ -165,9 +164,9 @@ export default {
     // 点击显示回复框
     replyBtn(index) {
       if (this.GET_LOGIN_STATUS) {
-        this.rows = 3
-        this.placeholder = ''
         this.$set(this.lists[index], 'show', true)
+        this.$set(this.lists[index], 'placeholder', '')
+        this.$set(this.lists[index], 'rows', 3)
       } else {
         this.$message.warning('未登录或登录信息已过期')
       }
@@ -176,8 +175,8 @@ export default {
     cancel(index) {
       this.$set(this.lists[index], 'value', '')
       this.$set(this.lists[index], 'show', false)
-      this.rows = 1
-      this.placeholder = '我也说一句'
+      this.$set(this.lists[index], 'placeholder', '我也说一句')
+      this.$set(this.lists[index], 'rows', 1)
     },
     // 确认留言
     confirm(index, touserid, tousername, toid, tovalue) {
