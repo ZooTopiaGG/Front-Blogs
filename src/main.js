@@ -71,9 +71,9 @@ axios.defaults.timeout = 5000
 // 配置请求头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 // 测试网接口地址
-// axios.defaults.baseURL = 'http://localhost:8088/'
+axios.defaults.baseURL = 'http://localhost:8088/'
 // 正式网接口地址
-axios.defaults.baseURL = 'http://api.55lover.com/'
+// axios.defaults.baseURL = 'http://api.55lover.com/'
 
 // 添加一个请求拦截器
 axios.interceptors.request.use(config => {

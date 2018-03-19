@@ -157,6 +157,7 @@ export default {
 .menu li a {
   height: 69px;
   font-size: 15px;
+  line-height: 69px;
 }
 
 .menu>li.active>a,.menu>li:hover>a {
